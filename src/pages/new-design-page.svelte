@@ -1,8 +1,8 @@
 <script lang="ts">
     import BlockSelector from "../components/BlockSelector.svelte";
     import GridCube from "../components/GridCube.svelte";
+    import SaveDesignButton from "../components/SaveDesignButton.svelte";
     import Button from "../elements/button.svelte";
-    import { SaveDesign } from "../services/data.service";
     import { Design } from "../services/runes";
 
   export let OnLeave: () => void;
@@ -12,7 +12,7 @@
   <nav>
     <Button OnClick={() => OnLeave()}>back to menu</Button>
     <span>{$Design.name}</span>
-    <Button OnClick={() => SaveDesign()}>Save design</Button>
+    <SaveDesignButton />
   </nav>
   <div id="designer">
     {#each $Design.design as cube}
@@ -28,6 +28,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 10px;
   }
 
   nav {
@@ -37,7 +38,7 @@
     align-items: center;
     gap: 15px;
     
-    :global(button:last-child) {
+    :global(*:last-child) {
       margin-left: auto;
     }
   }

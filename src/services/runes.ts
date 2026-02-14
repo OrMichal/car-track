@@ -8,6 +8,8 @@ export const Design: Writable<IDesign> = writable({
   design: []
 });
 
+export const Route: Writable<string> = writable("");
+
 export const SelectedGridFieldType: Writable<GridFieldType> = writable(GridFieldType.Water);
 
 for(let i = 0; i < 30; i++) {

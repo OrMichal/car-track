@@ -1,14 +1,20 @@
 <script lang="ts">
     import Button from "../elements/button.svelte";
-    import { Design } from "../services/runes";
+    import { Routes } from "../enums/Routes";
+    import { DeleteDesign } from "../services/data.service";
+    import { Design, Route } from "../services/runes";
     import type { IDesign } from "../types/IDesign";
 
  export let design: IDesign;
+ let refresh: number = 0;
 </script>
 
 <div class="card">
   <span>{design.name}</span> 
-  <Button OnClick={() => Design.set(design)}>load</Button>
+  <div>
+    <Button OnClick={() => {Design.set(design); Route.set(Routes.NewDesign)}}>load</Button>
+    <Button OnClick={() => {DeleteDesign(design.name); refresh++;}}>Delete</Button>
+  </div>
 </div>
 
 <style>
@@ -21,7 +27,7 @@
     border-bottom: 2px solid var(--accent);
   }
 
-  :global(.card button:last-child) {
+  :global(.card div:last-child) {
     margin-left: auto;
   }
 
