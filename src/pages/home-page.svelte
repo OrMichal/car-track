@@ -1,7 +1,9 @@
 <script lang="ts">
   import Button from "../elements/button.svelte";
-  import { Route } from "../services/runes";
+  import { GenerateNewDesign, Route } from "../services/runes";
   import { Routes } from "../enums/Routes";
+
+  GenerateNewDesign();
 </script>
 
 <section>

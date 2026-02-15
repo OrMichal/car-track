@@ -3,16 +3,20 @@
     import GridCube from "../components/GridCube.svelte";
     import SaveDesignButton from "../components/SaveDesignButton.svelte";
     import Button from "../elements/button.svelte";
+    import { GetDesign, SaveDesign } from "../services/data.service";
     import { Design } from "../services/runes";
 
-  export let OnLeave: () => void;
+    const saved: boolean = !!GetDesign($Design.name);
 </script>
 
 <section>
   <nav>
-    <Button OnClick={() => OnLeave()}>back to menu</Button>
     <span>{$Design.name}</span>
-    <SaveDesignButton />
+    {#if !saved}
+      <SaveDesignButton />
+    {:else}
+      <Button OnClick={() => SaveDesign($Design.name)}>Save</Button>
+    {/if}
   </nav>
   <div id="designer">
     {#each $Design.design as cube}

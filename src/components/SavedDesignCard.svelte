@@ -1,5 +1,6 @@
 <script lang="ts">
     import Button from "../elements/button.svelte";
+    import SecondaryButton from "../elements/secondary-button.svelte";
     import { Routes } from "../enums/Routes";
     import { DeleteDesign } from "../services/data.service";
     import { Design, Route } from "../services/runes";
@@ -12,8 +13,8 @@
 <div class="card">
   <span>{design.name}</span> 
   <div>
-    <Button OnClick={() => {Design.set(design); Route.set(Routes.NewDesign)}}>load</Button>
-    <Button OnClick={() => {DeleteDesign(design.name); refresh++;}}>Delete</Button>
+    <SecondaryButton OnClick={() => {Design.set(design); Route.set(Routes.NewDesign)}}>load</SecondaryButton>
+    <Button OnClick={() => {DeleteDesign(design.name); refresh++; }}>Delete</Button>
   </div>
 </div>
 

@@ -1,7 +1,8 @@
 <script lang="ts">
     import Button from "../elements/button.svelte";
+    import SecondaryButton from "../elements/secondary-button.svelte";
     import { SaveDesign } from "../services/data.service";
-    import { Design } from "../services/runes";
+    import { Design, GenerateNewDesign } from "../services/runes";
 
   let showDialog = false;
   let designName = $Design.name;
@@ -14,7 +15,10 @@
     <div class="dialog">
       <span>Save design</span>
       <input type="text" value={$Design.name} on:input={(e) => designName = e.target?.value}>
-      <Button OnClick={() => {SaveDesign(designName); showDialog = false}}>save</Button>
+      <div class="buttons">
+        <SecondaryButton OnClick={() => showDialog = false}>close</SecondaryButton>
+        <Button OnClick={() => {SaveDesign(designName); showDialog = false; GenerateNewDesign();}}>save</Button>
+      </div>
     </div>
   {/if}
 </div>
@@ -67,6 +71,13 @@
   input:focus {
     outline: none;
     border: solid 2px var(--accent);
+  }
+
+  .buttons {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
   }
 
 </style>

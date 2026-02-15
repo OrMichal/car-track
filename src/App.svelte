@@ -1,4 +1,5 @@
 <script lang="ts">
+    import BreadCrumps from "./components/bread-crumps.svelte";
     import Button from "./elements/button.svelte";
     import { Routes } from "./enums/Routes";
     import HomePage from "./pages/home-page.svelte";
@@ -12,9 +13,11 @@
   {#if $Route == Routes.Home}
     <HomePage />
   {:else if $Route == Routes.LoadDesign}
-    <LoadDesignPage OnLeave={() => Route.set(Routes.Home)} />
+    <BreadCrumps />
+    <LoadDesignPage />
   {:else if $Route == Routes.NewDesign}
-    <NewDesignPage OnLeave={() => Route.set(Routes.Home)} />
+    <BreadCrumps />
+    <NewDesignPage />
   {/if}
 </main>
 
@@ -32,5 +35,11 @@
     & > * {
       max-width: 80%;
     }
+  }
+
+  main {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
   }
 </style>

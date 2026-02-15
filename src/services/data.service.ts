@@ -1,23 +1,30 @@
 import type { IDesign } from "../types/IDesign";
 import { Design } from "./runes";
+import { get } from "svelte/store";
 
 export function SaveDesign(name: string): void {
-  Design.update(x => ({ ...x, name: name }));
+  Design.update(x => ({ ...x, name }));
+
+  const des = get(Design);
 
   let designs = localStorage.getItem("saved");
-  if(designs) {
-    let parsed: IDesign[] = JSON.parse(designs);
-    let des;
-    Design.subscribe(x => des = x);
 
-    localStorage.setItem("saved", JSON.stringify([...parsed, des]));
+  if (!designs) {
+    localStorage.setItem("saved", JSON.stringify([des]));
     return;
   }
 
-  let des;
-  Design.subscribe(x => des = x);
+  let parsed: IDesign[] = JSON.parse(designs);
 
-  localStorage.setItem("saved", JSON.stringify([des]));
+  const index = parsed.findIndex(x => x.name === name);
+
+  if (index !== -1) {
+    parsed[index] = des;
+  } else {
+    parsed.push(des);
+  }
+
+  localStorage.setItem("saved", JSON.stringify(parsed));
 }
 
 export function DeleteDesign(name: string): void {
@@ -28,4 +35,24 @@ export function DeleteDesign(name: string): void {
 
     localStorage.setItem("saved", JSON.stringify(parsed));
   }
+}
+
+export function GetDesign(name: string): IDesign | undefined {
+  let designs = localStorage.getItem("saved");
+  if(designs) {
+    let parsed: IDesign[] = JSON.parse(designs);
+    return parsed.find(x => x.name === name);
+  }
+
+  return undefined;
+}
+
+export function GetDesigns(pattern: string): IDesign[] {
+  let designs = localStorage.getItem("saved");
+  if(designs) {
+    let parsed: IDesign[] = JSON.parse(designs);
+    return parsed.filter(x => x.name.includes(pattern));
+  }
+
+  return [];
 }
